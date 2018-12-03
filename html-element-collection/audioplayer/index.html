@@ -1,42 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Задача 3. Аудиоплеер | Домашнее задание к лекции 1.2</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Задача 3. Аудиоплеер | Домашнее задание к лекции 1.2</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-  <div class="mediaplayer">
-  	<audio src="https://d34x6xks9kc6p2.cloudfront.net/540997b0-a35f-4b69-86d6-b1c925c4a264/540997b0-a35f-4b69-86d6-b1c925c4a264.mp3"></audio>
-  	<div class="discarea">
-  		<div class="disc">
-  		</div>
-  		<div class="stylus">
-  			<div class="pivot"></div>
-  			<div class="arm"></div>
-  			<div class="head"></div>
-  		</div>
-  	</div>
-  	<div class="controls">
-  		<span class="title" title="LA Chill Tour"></span>
-  		<div class="buttons">
-  			<button class="back">
+    <div class="mediaplayer">
+        <audio src="https://netology-code.github.io/hj-homeworks/html-element-collection/audioplayer/mp3/LA Chill Tour.mp3"></audio>
+        <div class="discarea">
+            <div class="disc">
+            </div>
+            <div class="stylus">
+                <div class="pivot"></div>
+                <div class="arm"></div>
+                <div class="head"></div>
+            </div>
+        </div>
+        <div class="controls">
+            <span class="title" title="LA Chill Tour"></span>
+            <div class="buttons">
+                <button class="back">
   				<i class="fa fa-backward"></i>
   			</button>
-  			<button class="playstate">
+                <button class="playstate">
   				<i class="fa fa-play"></i>
   				<i class="fa fa-pause"></i>
   			</button>
-  			<button class="stop">
+                <button class="stop">
   				<i class="fa fa-stop"></i>
   			</button>
-  			<button class="next">
+                <button class="next">
   				<i class="fa fa-forward"></i>
   			</button>
-  		</div>
-  	</div>
-  </div>
+            </div>
+        </div>
+    </div>
+
 </body>
+
+<script>
+    'use strict';
+    const player = document.getElementsByClassName('mediaplayer')[0];
+    const audio = document.getElementsByTagName('audio')[0];
+    const playBtn = document.getElementsByClassName('playstate')[0];
+    const stopBtn = document.getElementsByClassName('stop')[0];
+    const backBtn = document.getElementsByClassName('back')[0];
+    const nextBtn = document.getElementsByClassName('next')[0];
+    const songTitle = document.getElementsByClassName('title')[0];
+    const sound = player.classList.contains('play') ? true : false;
+
+
+    const playList = {
+        'LA Chill Tour': 'https://netology-code.github.io/hj-homeworks/html-element-collection/audioplayer/mp3/LA Chill Tour.mp3',
+        'This is it band': 'https://netology-code.github.io/hj-homeworks/html-element-collection/audioplayer/mp3/This is it band.mp3',
+        'LA Fusion Jam': 'https://netology-code.github.io/hj-homeworks/html-element-collection/audioplayer/mp3/LA Fusion Jam.mp3'
+    };
+
+
+
+    const play = () => {
+        player.classList.toggle('play');
+
+        let sound = player.classList.contains('play') ? true : false;
+
+        if (sound) {
+            audio.play();
+        }
+        if (!sound) {
+            audio.pause();
+        }
+    }
+
+
+    const stop = () => {
+        player.className = ('mediaplayer');
+        let sound = player.classList.contains('play') ? true : false;
+
+        if (!sound) {
+            audio.pause();
+            audio.currentTime = 0;
+        }
+    }
+
+
+    playBtn.onclick = play;
+    stopBtn.onclick = stop;
+
+
+    backBtn.onclick = () => {
+
+        if (!player.classList.contains('play')) return;
+
+        stop();
+
+        let songIndex = Object.keys(playList).findIndex(song => song === songTitle.title);
+
+        if (songIndex == 0) {
+            songTitle.title = Object.keys(playList)[Object.keys(playList).length - 1];
+        } else {
+            songTitle.title = Object.keys(playList)[songIndex - 1];
+
+        }
+
+        audio.src = playList[songTitle.title];
+        setTimeout(play, 300);
+    }
+
+
+    nextBtn.onclick = () => {
+
+        if (!player.classList.contains('play')) return;
+
+        stop();
+
+        let songIndex = Object.keys(playList).findIndex(song => song === songTitle.title);
+
+        if (songIndex == Object.keys(playList).length - 1) {
+            songTitle.title = Object.keys(playList)[0];
+
+        } else {
+            songTitle.title = Object.keys(playList)[songIndex + 1];
+
+        }
+
+        audio.src = playList[songTitle.title];
+        setTimeout(play, 300);
+    }
+</script>
+
 </html>
