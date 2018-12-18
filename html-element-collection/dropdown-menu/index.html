@@ -20,11 +20,14 @@
 </body>
 <script>
     'use strict';
-    const active = document.getElementsByClassName('wrapper-dropdown')[0];
-    active.onclick = function() {
-        this.className = this.className === 'wrapper-dropdown' ?
-            'wrapper-dropdown active' : 'wrapper-dropdown'
-    }
+        const dropBtn = document.getElementsByClassName('wrapper-dropdown')[0];
+
+        function drop() {
+            this.classList.toggle('active');
+        }
+
+        dropBtn.onclick = drop;
+
 </script>
 
 </html>
