@@ -52,7 +52,6 @@
     const backBtn = document.getElementsByClassName('back')[0];
     const nextBtn = document.getElementsByClassName('next')[0];
     const songTitle = document.getElementsByClassName('title')[0];
-    const sound = player.classList.contains('play') ? true : false;
 
 
     const playList = {
@@ -62,10 +61,8 @@
     };
 
 
-
     const play = () => {
         player.classList.toggle('play');
-
         let sound = player.classList.contains('play') ? true : false;
 
         if (sound) {
@@ -92,10 +89,9 @@
     stopBtn.onclick = stop;
 
 
+
     backBtn.onclick = () => {
-
         if (!player.classList.contains('play')) return;
-
         stop();
 
         let songIndex = Object.keys(playList).findIndex(song => song === songTitle.title);
@@ -106,16 +102,14 @@
             songTitle.title = Object.keys(playList)[songIndex - 1];
 
         }
-
         audio.src = playList[songTitle.title];
         setTimeout(play, 300);
     }
 
 
+
     nextBtn.onclick = () => {
-
         if (!player.classList.contains('play')) return;
-
         stop();
 
         let songIndex = Object.keys(playList).findIndex(song => song === songTitle.title);
@@ -125,9 +119,7 @@
 
         } else {
             songTitle.title = Object.keys(playList)[songIndex + 1];
-
         }
-
         audio.src = playList[songTitle.title];
         setTimeout(play, 300);
     }
