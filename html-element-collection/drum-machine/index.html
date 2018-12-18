@@ -39,9 +39,8 @@
 </body>
 <script>
     'use strict';
-
-    const drumKitArr = Array.from(document.getElementsByClassName('drum-kit'));
-    const playBtns = Array.from(drumKitArr[0].children);
+    const drumKit = document.getElementsByClassName('drum-kit');
+    const playBtns = Array.from(drumKit[0].children);
 
     playBtns.forEach(el => {
         let sound = el.getElementsByTagName('audio');
