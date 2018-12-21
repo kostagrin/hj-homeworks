@@ -113,12 +113,10 @@
     }
 
 
-
     nextBtn.onclick = () => {
         let songIndex = Object.keys(playList).findIndex(song => song === songTitle.title);
 
         let forward = () => {
-
             if (songIndex == Object.keys(playList).length - 1) {
                 songTitle.title = Object.keys(playList)[0];
 

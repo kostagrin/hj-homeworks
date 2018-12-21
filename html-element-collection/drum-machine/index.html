@@ -43,9 +43,11 @@
     const playBtns = Array.from(drumKit[0].children);
 
     playBtns.forEach(el => {
-        let sound = el.getElementsByTagName('audio');
+        let sound = el.getElementsByTagName('audio')[0];
         el.onclick = () => {
-            sound[0].play();
+            sound.pause();
+            sound.currentTime = 0;
+            sound.play();
         }
     });
 </script>
