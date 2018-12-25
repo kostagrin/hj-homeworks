@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
   <title>Задача 1. Пианино | Домашнее задание к лекции 2.1</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
   <ul class="set middle">
     <li class="white">
@@ -15,15 +17,87 @@
     <li class="black">
       <audio src=""></audio>
     </li>
-  	<li class="white">
+    <li class="white">
       <audio src=""></audio>
     </li>
     <li class="black">
       <audio src=""></audio>
     </li>
-  	<li class="white">
+    <li class="white">
       <audio src=""></audio>
     </li>
   </ul>
+
+
+  <script>
+    'use strict';
+    const pianoKeySet = document.getElementsByClassName('set')[0]; //ROOT NODE
+    const pianoKeys = pianoKeySet.querySelectorAll('li'); // SOUNDS LIST
+
+    const soundList = [
+      'first.mp3',
+      'second.mp3',
+      'third.mp3',
+      'fourth.mp3',
+      'fifth.mp3'
+    ];
+
+    const soundTones = ['middle', 'higher', 'lower'];
+    let currentTone;
+
+    /*remove all possible tones from the ROOT NODE and set it to the currentTone*/
+    function setCurrentTone() {
+      soundTones.map(tone => {
+        pianoKeySet.classList.remove(tone);
+      });
+      pianoKeySet.classList.add(currentTone);
+    };
+
+    /*set initial tone on the ROOT NODE to 'middle'*/
+    (function setInitialTone() {
+      currentTone = soundTones[0];
+      setCurrentTone();
+    })(); //run this function
+
+
+    function setSoundSources() {
+      for (let i = 0; i < pianoKeys.length; i++) {
+        pianoKeys[i].firstElementChild.setAttribute('src', `./sounds/${currentTone}/${soundList[i]}`);
+      }
+    }
+
+    /*set initial sound sources of the SOUNDS LIST to 'middle' tone*/
+    setSoundSources();
+
+    function changeCurrnetTone(event) {
+      if (event.altKey) {
+        currentTone = soundTones[1];
+        setCurrentTone();
+        setSoundSources();
+      } else if (event.shiftKey) {
+        currentTone = soundTones[2];
+        setCurrentTone();
+        setSoundSources();
+      } else {
+        currentTone = soundTones[0];
+        setCurrentTone();
+        setSoundSources();
+      }
+    }
+
+    document.addEventListener('keydown', changeCurrnetTone);
+    document.addEventListener('keyup', changeCurrnetTone);
+
+    function palySound() {
+      this.firstElementChild.pause();
+      this.firstElementChild.currentTime = 0;
+      this.firstElementChild.play();
+    }
+
+    pianoKeys.forEach(key => {
+      key.addEventListener('click', palySound);
+    });
+  </script>
 </body>
+
 </html>
