@@ -31,7 +31,7 @@
 
   <script>
     'use strict';
-    const pianoKeySet = document.getElementsByClassName('set')[0]; //ROOT NODE
+    const pianoKeySet = document.getElementsByClassName('set')[0]; // ROOT NODE
     const pianoKeys = pianoKeySet.querySelectorAll('li'); // SOUNDS LIST
 
     const soundList = [
@@ -42,48 +42,37 @@
       'fifth.mp3'
     ];
 
-    const soundTones = ['middle', 'higher', 'lower'];
-    let currentTone = soundTones[0];
+    let currentTone = 'middle';
 
     /*remove all possible tones from the ROOT NODE and set it to the currentTone*/
     function setCurrentTone() {
-      soundTones.map(tone => {
-        pianoKeySet.classList.remove(tone);
-      });
+      pianoKeySet.classList.remove('middle', 'higher', 'lower');
       pianoKeySet.classList.add(currentTone);
     }
     setCurrentTone();
 
+ 
+    function changeCurrnetTone(event) {
+      if (event.altKey) {
+        currentTone = 'higher';
+        setCurrentTone();
+      } else if (event.shiftKey) {
+        currentTone = 'lower';
+        setCurrentTone();
+      } else {
+        currentTone = 'middle';
+        setCurrentTone();
+      }
+    }
 
     function setSoundSources() {
       for (let i = 0; i < pianoKeys.length; i++) {
-        pianoKeys[i].firstElementChild.setAttribute('src', `./sounds/${currentTone}/${soundList[i]}`);
+        pianoKeys[i].firstElementChild.src = `./sounds/${currentTone}/${soundList[i]}`;
       }
     }
-    /*set initial sound sources of the SOUNDS LIST to 'middle' tone*/
-    setSoundSources();
-
-    function changeCurrnetTone(event) {
-      if (event.altKey) {
-        currentTone = soundTones[1];
-        setCurrentTone();
-        setSoundSources();
-      } else if (event.shiftKey) {
-        currentTone = soundTones[2];
-        setCurrentTone();
-        setSoundSources();
-      } else {
-        currentTone = soundTones[0];
-        setCurrentTone();
-        setSoundSources();
-      }
-    }
-
-    document.addEventListener('keydown', changeCurrnetTone);
-    document.addEventListener('keyup', changeCurrnetTone);
 
     function palySound() {
-      event.currentTarget.firstElementChild.pause();
+      setSoundSources();
       event.currentTarget.firstElementChild.currentTime = 0;
       event.currentTarget.firstElementChild.play();
     }
@@ -92,6 +81,8 @@
       key.addEventListener('click', palySound);
     });
 
+    document.addEventListener('keydown', changeCurrnetTone);
+    document.addEventListener('keyup', changeCurrnetTone);
   </script>
 </body>
 
