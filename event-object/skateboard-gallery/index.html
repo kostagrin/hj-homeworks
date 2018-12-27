@@ -43,14 +43,14 @@
 
     function showChosen(event) {
       event.preventDefault();
-      if (this.classList.contains('gallery-current')) {
+      if (event.currentTarget.classList.contains('gallery-current')) { //*this
         return;
       } else {
         galleryList.forEach(el => {
           el.classList.remove('gallery-current');
         });
-        this.classList.add('gallery-current');
-        galleryView.src = this.href;
+        event.currentTarget.classList.add('gallery-current'); //*this
+        galleryView.src = event.currentTarget.href; //*this
       }
     }
 
@@ -58,6 +58,7 @@
       el.addEventListener('click', showChosen);
     });
 
+    //* "this" was replaced with "event.currentTarget".
   </script>
 </body>
 
