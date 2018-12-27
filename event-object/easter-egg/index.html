@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
   <link rel="stylesheet" href="css/style.css">
   <script src="https://use.fontawesome.com/70378a66b8.js"></script>
 </head>
+
 <body>
   <nav>
     <a href="#">Главная</a>
@@ -30,10 +32,9 @@
 
         <!-- Symbol -->
         <symbol id="s-text">
-          <text text-anchor="middle"
-                  x="50%" y="50%" dy=".35em">
-             нетология
-           </text>
+          <text text-anchor="middle" x="50%" y="50%" dy=".35em">
+            нетология
+          </text>
         </symbol>
 
         <!-- Duplicate symbols -->
@@ -45,5 +46,44 @@
       </svg>
     </div>
   </main>
+
+  <script>
+    'use strict';
+
+    function showMenu(event) {
+      if (event.altKey && event.ctrlKey && event.code === 'KeyT') {
+        document.getElementsByTagName('nav')[0].classList.toggle('visible');
+      }
+    }
+
+    document.addEventListener('keydown', showMenu);
+
+
+
+    const userEntry = [];
+
+    function readPassword(event) {
+      if (event.altKey || event.ctrlKey) {
+        return;
+      }
+      let passWord = 'YTNJKJUBZ';
+      let userWord = [];
+
+      userEntry.push(event.code);
+      
+      if (userEntry.length == 9) {
+        userEntry.map(symbol => {
+        userWord.push(symbol.slice(-1));
+        });
+      }
+
+      if (userWord.join('') === passWord) {
+        document.getElementsByClassName('secret')[0].classList.add('visible');
+      }
+    }
+
+    document.addEventListener('keydown', readPassword);
+  </script>
 </body>
+
 </html>
