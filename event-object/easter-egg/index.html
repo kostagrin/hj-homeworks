@@ -68,11 +68,12 @@
       let userWord = [];
 
       userEntry.push(event.code);
-      
-      if (userEntry.length == 9) {
-        userEntry.map(symbol => {
-        userWord.push(symbol.slice(-1));
+
+      if (userEntry.length >= 9) {
+        userEntry.slice(-9).map(symbol => {
+          userWord.push(symbol.slice(-1));
         });
+
       }
 
       if (userWord.join('') === passWord) {
