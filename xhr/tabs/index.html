@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
 
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
   <div class="tabs">
     <nav>
@@ -21,5 +23,55 @@
     </div>
     <div id="preloader" class="hidden">Загрузка...</div>
   </div>
+
+  <script>
+    'use strict';
+    const links = document.querySelectorAll('nav > a');
+    let link = links[0].getAttribute('href');
+
+    const xhr = new XMLHttpRequest();
+    xhr.addEventListener("loadstart", onLoadStart);
+    xhr.addEventListener("loadend", onLoadEnd);
+
+
+    function getXHR() {
+      xhr.open('GET', link, true);
+      xhr.send();
+
+      xhr.addEventListener('load', () => {
+        document.getElementById('content').innerHTML = xhr.responseText;
+      });
+    }
+
+
+    function showActiveTab(event) {
+      event.preventDefault();
+      link = event.currentTarget.getAttribute('href');
+      getXHR();
+      links.forEach(link => {
+        link.classList.remove('active');
+      });
+      event.currentTarget.classList.add('active');
+    }
+
+    
+    function onLoadStart() {
+      document.getElementById('preloader').classList.toggle('hidden');
+    }
+
+    function onLoadEnd() {
+      document.getElementById('preloader').classList.toggle('hidden');
+    }
+
+
+    links.forEach(link => {
+      link.addEventListener('click', showActiveTab);
+    });
+
+    document.addEventListener('DOMContentLoaded', getXHR);
+
+  </script>
+
 </body>
+
 </html>
