@@ -26,3 +26,26 @@ document.getElementById('content').addEventListener('click', (event) => {
       document.getElementById('card-price').innerHTML = target.dataset.price;
     }
 });
+
+// Мой код
+const xhr = new XMLHttpRequest();
+xhr.open('GET', 'https://neto-api.herokuapp.com/book/');
+xhr.send();
+xhr.addEventListener('load', onLoad);
+
+function onLoad() {
+    const books = JSON.parse(xhr.responseText);
+    const bookList = document.getElementById('content');
+
+    for (book of books) {
+        let li = document.createElement('LI');
+        let img = document.createElement('IMG');
+        bookList.appendChild(li);
+        li.dataset.title = book.title;
+        li.dataset.author = book.author;
+        li.dataset.info = book.info;
+        li.dataset.price = book.price;
+        let cover = li.appendChild(img);
+        cover.setAttribute('src', book.cover.small);
+    }
+}
