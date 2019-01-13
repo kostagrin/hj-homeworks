@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
   <title>Список дел</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
   <fieldset class="list-block">
     <ul>
@@ -29,5 +31,45 @@
     </ul>
     <h3>Выполнено задач: <output></output></h3>
   </fieldset>
+
+  <script>
+    'use strict';
+    const taskList = document.querySelectorAll('.list-block input');
+    const output = document.getElementsByTagName('output')[0];
+
+    function counter() {
+      let counterValue = 0; /*Я пробовал поместить эту переменную
+      вне функции и в дальнейшем работать с ней, нежели чем каждый раз
+      вызывать саму функци, но этот вариант не получился.*/
+      taskList.forEach(task => {
+        if (task.checked) {
+          counterValue ++;
+        }
+      });
+      return counterValue;
+    }
+
+    function showOutput() {
+      let output = document.querySelector('output');
+      if (this.checked) {
+        output.innerHTML = `${counter()} из ${taskList.length}`;
+      }
+      if (counter() == taskList.length) {
+        document.getElementsByClassName('list-block')[0].classList.add('complete');
+      }
+    }
+
+    taskList.forEach(task => {
+      task.addEventListener('change', showOutput);
+    });
+
+    // обнуляем начальные значения
+    document.addEventListener('DOMContentLoaded', function () {
+      taskList.forEach(task => {
+        task.checked = false;
+      });
+    });
+  </script>
 </body>
+
 </html>
