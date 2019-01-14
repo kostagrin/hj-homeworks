@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Конвертер валют</title>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9"
+    crossorigin="anonymous">
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
   <main id="content" class="hidden">
     <input type="number" id="source" value="100">
@@ -18,5 +21,58 @@
   </main>
 
   <div id="loader" class="hidden">Загрузка...</div>
+
+  <script>
+    'use strict';
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://neto-api.herokuapp.com/currency');
+    xhr.send();
+    xhr.addEventListener('load', getCurrencyList);
+
+
+    function getCurrencyList() {
+      let currencyList = JSON.parse(xhr.responseText);
+
+      currencyList.forEach(name => {
+        let from = document.getElementById('from').appendChild(document.createElement('OPTION'));
+        from.innerHTML = name.code;
+        from.setAttribute('value', name.value);
+        from.setAttribute('code', name.code);
+        
+        let to = document.getElementById('to').appendChild(document.createElement('OPTION'));
+        to.setAttribute('value', name.value);
+        to.setAttribute('code', name.code);
+        to.innerHTML = name.code;
+      });
+
+      document.getElementById('content').classList.remove('hidden');
+    }
+
+    const input = document.getElementById('source');
+    const output = document.getElementById('result');
+
+    let from = document.getElementById('from');
+    let to = document.getElementById('to');
+
+    function convertFromTo() {
+      let inputValue = Number(input.value);
+      let fromValue = Number(from.value);
+      let toValue = Number(to.value);
+
+      let result = 0;
+      result = (inputValue * fromValue / toValue).toFixed(2);
+      document.getElementById('result').innerHTML = result;
+    }
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('result').innerHTML = Number(input.value).toFixed(2);
+    });
+
+    input.addEventListener('input', convertFromTo);
+    from.addEventListener('change', convertFromTo);
+    to.addEventListener('change', convertFromTo);
+  </script>
 </body>
+
 </html>
