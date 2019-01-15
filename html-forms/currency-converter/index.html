@@ -37,11 +37,9 @@
         let from = document.getElementById('from').appendChild(document.createElement('OPTION'));
         from.innerHTML = name.code;
         from.setAttribute('value', name.value);
-        from.setAttribute('code', name.code);
         
         let to = document.getElementById('to').appendChild(document.createElement('OPTION'));
         to.setAttribute('value', name.value);
-        to.setAttribute('code', name.code);
         to.innerHTML = name.code;
       });
 
