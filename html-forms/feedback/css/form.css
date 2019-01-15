@@ -151,3 +151,7 @@ fieldset {
 .hidden {
   display: none;
 }
+
+#subject {
+  margin-left: 30px;
+}
