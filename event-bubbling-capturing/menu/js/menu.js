@@ -36,3 +36,4 @@ document.querySelectorAll('.dropdown')
 
 document.querySelectorAll('a')
   .forEach(initLink);
+  
