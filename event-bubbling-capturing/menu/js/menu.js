@@ -1,5 +1,4 @@
 'use strict';
-
 function toggleMenu(event) {
   if (this.classList.contains('show')) {
     this.classList.remove('show');
@@ -11,12 +10,14 @@ function toggleMenu(event) {
 }
 
 function openLink(event) {
+  event.preventDefault();
+  event.stopPropagation(); 
   console.log(this.textContent);
 }
 
-function init(node) {
-  node.addEventListener('click', toggleMenu);
-}
+// function init(node) {
+//   node.addEventListener('click', toggleMenu);
+// }
 
 function initLink(node) {
   if (node.dataset.toggle) {
@@ -25,10 +26,13 @@ function initLink(node) {
   node.addEventListener('click', openLink);
 }
 
-Array
-  .from(document.querySelectorAll('.dropdown'))
-  .forEach(init);
+/* удалил Array.from потому что у NodeList
+ есть метод forEach*/
+document.querySelectorAll('.dropdown')
+  .forEach(item => {
+    //заменил вложенную функцию на прямой вызов функции
+    item.addEventListener('click', toggleMenu);
+  });
 
-Array
-  .from(document.querySelectorAll('a'))
+document.querySelectorAll('a')
   .forEach(initLink);
