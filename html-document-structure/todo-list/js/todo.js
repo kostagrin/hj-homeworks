@@ -6,15 +6,9 @@ const listItems = todoList.querySelectorAll('input');
 
 
 function sortItem(event) {
-	let item = event.currentTarget;
-
-	if(item.hasAttribute('checked')) {
-		undone.appendChild(item.parentElement);
-		item.removeAttribute('checked');
-	} else {
-		done.appendChild(item.parentElement);
-		item.setAttribute('checked', true);
-	}
+	event.target.checked ? 
+		done.appendChild(event.target.parentElement) :
+		undone.appendChild(event.target.parentElement);		
 }
 
 listItems.forEach(item => item.addEventListener('click', sortItem));
