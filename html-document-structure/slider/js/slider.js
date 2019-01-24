@@ -10,15 +10,15 @@ function Slider(container) {
 	const last = container.querySelector('[data-action = last]');
 
 	arrows.forEach(arrow => {
-		arrow.addEventListener('click', shiftSlides);
+		arrow.addEventListener('click', shiftSlides, false);
 	});
 
-	
+
 	function changeBtnStatus() {
 		let activeSlide = container.querySelector('.slide-current');
-			arrows.forEach(arrow => {
-				arrow.classList.remove('disabled');
-			});
+		arrows.forEach(arrow => {
+			arrow.classList.remove('disabled');
+		});
 
 		if (!activeSlide.previousElementSibling) {
 			first.classList.add('disabled');
@@ -26,35 +26,39 @@ function Slider(container) {
 		} else if (!activeSlide.nextElementSibling) {
 			next.classList.add('disabled');
 			last.classList.add('disabled');
-		} 
+		}
 	}
 
 
 	function shiftSlides(event) {
+		if (event.target.classList.contains('disabled')) return;
+
 		let currentSlide = container.querySelector('.slide-current');
 		let nextSlide = event.target.dataset.action;
 
 		currentSlide.classList.remove('slide-current');
-		
-		switch (nextSlide) {
-			case 'next':
-			currentSlide.nextElementSibling
-				.classList.add('slide-current');
-			break;
-			case 'prev':
-			currentSlide.previousElementSibling
-				.classList.add('slide-current');
-			break;
-			case 'first':
-			currentSlide.parentElement.firstElementChild
-				.classList.add('slide-current');
-			break;
-			case 'last':
-			currentSlide.parentElement.lastElementChild
-				.classList.add('slide-current');
-		}
+
+			switch (nextSlide) {
+				case 'next':
+					currentSlide.nextElementSibling
+						.classList.add('slide-current');
+					break;
+				case 'prev':
+					currentSlide.previousElementSibling
+						.classList.add('slide-current');
+					break;
+				case 'first':
+					currentSlide.parentElement.firstElementChild
+						.classList.add('slide-current');
+					break;
+				case 'last':
+					currentSlide.parentElement.lastElementChild
+						.classList.add('slide-current');
+			}	
+
 		changeBtnStatus();
 	}
+
 	changeBtnStatus();
 }
 
