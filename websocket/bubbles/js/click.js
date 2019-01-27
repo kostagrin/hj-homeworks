@@ -6,7 +6,6 @@ wsc.addEventListener('open', () => {
 	showBubbles(wsc);
 });
 
-
 canvas.addEventListener('click', event => {
 	wsc.send(JSON.stringify({
 		x: event.x,
