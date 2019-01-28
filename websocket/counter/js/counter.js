@@ -5,7 +5,6 @@ const errors = document.querySelector('.errors');
 
 wsc.addEventListener('open', () => {
 	wsc.addEventListener('message', showMessage);
-
 });
 
 function showMessage(event) {
