@@ -2,6 +2,8 @@
 
 const counterBox = document.getElementById('counter');
 const btns = document.querySelector('.wrap-btns');
+const increment = document.getElementById('increment');
+const decrement = document.getElementById('decrement');
 
 btns.addEventListener('click', count);
 
