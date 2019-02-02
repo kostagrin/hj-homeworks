@@ -1,42 +1,44 @@
 'use strict';
-
 const counterBox = document.getElementById('counter');
 const btns = document.querySelector('.wrap-btns');
-const increment = document.getElementById('increment');
-const decrement = document.getElementById('decrement');
 
 btns.addEventListener('click', count);
 
-let counter = 0;
 
 function count(event) {
-	switch (event.target) {
-		case (increment):
+	let counter = +localStorage.getItem('counterValue');
+	switch (event.target.id) {
+		case ('increment'):
 			counter++;
+			localStorage.counterValue = counter;
 			break;
-		case (decrement):
+		case ('decrement'):
 			if (localStorage.getItem('counterValue') == 0) {
 				return;
 			}
 			counter--;
+			localStorage.counterValue = counter;
 			break;
-		case (reset):
+		case ('reset'):
 			counter = 0;
-			localStorage.clear();
-			location.reload();
+			localStorage.counterValue = counter;
 	}
-	saveSession();
 	displaySessionValue();
+	return counter;
 }
 
-
-function saveSession() {
-	localStorage.setItem('counterValue', counter);
+function initialiseLocalStorage() {
+	if (localStorage.counterValue) {
+		return
+	} else {
+		localStorage.setItem('counterValue', 0);
+	}
 }
+
 
 function displaySessionValue() {
 	counterBox.innerHTML = localStorage.counterValue;
 }
 
-document.addEventListener('DOMContentLoaded', saveSession);
+document.addEventListener('DOMContentLoaded', initialiseLocalStorage);
 document.addEventListener('DOMContentLoaded', displaySessionValue);
