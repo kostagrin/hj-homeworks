@@ -1,7 +1,6 @@
 'use strict';
 const canv = document.querySelector('canvas');
 const ctx = canv.getContext('2d');
-const pi = Math.PI;
 
 canv.width = 800;
 canv.height = 400;
@@ -24,7 +23,7 @@ function updateCanv() {
 		ctx.fillStyle = starColor;
 		ctx.strokeStyle = starColor;
 		ctx.globalAlpha = starBrightness;
-		ctx.arc(x, y, starSize / 2, 0, 2 * pi, false);
+		ctx.arc(x, y, starSize / 2, 0, 2 * Math.PI, false);
 		ctx.stroke();
 		ctx.fill();
 		ctx.closePath();
