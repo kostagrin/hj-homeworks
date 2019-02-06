@@ -28,9 +28,7 @@ function count(event) {
 }
 
 function initialiseLocalStorage() {
-	if (localStorage.counterValue) {
-		return
-	} else {
+	if (!localStorage.counterValue) {
 		localStorage.setItem('counterValue', 0);
 	}
 }
