@@ -1,5 +1,4 @@
 'use strict';
-
 if (navigator.mediaDevices === undefined) {
   navigator.mediaDevices = {};
 }
@@ -36,11 +35,58 @@ function createThumbnail(video) {
   });
 }
 
-function record(app) {
+
+function record(app, limit) {
   return new Promise((done, fail) => {
+    let recorder = null;
+    let recorded = null;
+    let image = null;
+    let stream = null;
     app.mode = 'preparing';
-    setTimeout(() => {
-      fail('Не удалось записать видео');
-    }, app.limit);
+
+    navigator.mediaDevices
+      .getUserMedia({
+        video: true,
+        audio: false
+      })
+      .then(str => {
+        setTimeout(() => {
+          stream = str;
+          app.mode = 'recording';
+          app.preview.srcObject = stream;
+          recorder = new MediaRecorder(stream);
+          let chunks = [];
+          recorder.start();
+
+          recorder.addEventListener('dataavailable', event => chunks.push(event.data));
+
+          recorder.addEventListener('stop', event => {
+            recorded = new Blob(chunks, {
+              'type': recorder.mimeType
+            });
+            createThumbnail(recorded)
+              .then(res => {
+                image = res;
+                console.log(recorded, image);
+                done({
+                  video: recorded,
+                  frame: image
+                });
+              })
+              .catch(err => fail(err));
+            chunks = null;
+            recorder = stream = null;
+          });
+        }, 1000);
+      })
+      .then(() => {
+        setTimeout(() => {
+          app.mode = 'sending';
+          app.preview.srcObject = null;
+          recorder.stop();
+          stream.getVideoTracks().map(track => track.stop());
+        }, limit);
+      })
+      .catch(err => fail(err));
   });
 }
