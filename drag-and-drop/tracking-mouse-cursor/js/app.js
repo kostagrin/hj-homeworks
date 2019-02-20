@@ -23,7 +23,7 @@ function getEyesCoords() {
 	eyesCoords.left.x = leftEye.getClientRects()[0].x + (leftEye.getClientRects()[0].width / 2);
 	eyesCoords.left.y = leftEye.getClientRects()[0].y + (leftEye.getClientRects()[0].height / 2);
 	eyesCoords.right.x = rightEye.getClientRects()[0].x + (rightEye.getClientRects()[0].width / 2);
-	eyesCoords.right.y = rightEye.getClientRects()[0].x + (rightEye.getClientRects()[0].height / 2);
+	eyesCoords.right.y = rightEye.getClientRects()[0].y + (rightEye.getClientRects()[0].height / 2);
 }
 
 
@@ -33,7 +33,10 @@ function updateCursorPos(event) {
 }
 
 
-function rotateLeftEye() {
+function rotateEyes(event) {
+	getEyesCoords();
+	updateCursorPos(event);
+
 	if (cursorPos.x < eyesCoords.left.x) {
 		leftEye.firstElementChild.style.left = `0%`;
 	} else if (cursorPos.x > eyesCoords.left.x) {
@@ -49,9 +52,9 @@ function rotateLeftEye() {
 	}	else {
 		leftEye.firstElementChild.style.top = `25%`;
 	} 
-}
 
-function rotateRightEye() {
+
+
 	if (cursorPos.x < eyesCoords.right.x) {
 		rightEye.firstElementChild.style.left = `0%`;
 	} else if (cursorPos.x > eyesCoords.right.x) {
@@ -69,8 +72,4 @@ function rotateRightEye() {
 	} 
 }
 
-
-document.addEventListener('mousemove', getEyesCoords);
-document.addEventListener('mousemove', updateCursorPos);
-document.addEventListener('mousemove', rotateLeftEye);
-document.addEventListener('mousemove', rotateRightEye);
+document.addEventListener('mousemove', rotateEyes);
